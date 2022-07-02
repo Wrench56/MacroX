@@ -11,7 +11,7 @@ setup(
     long_description = 'Please find more information on my Github page!',
     entry_points={
          "console_scripts": [
-            "macrox=src.macrox:main"
+            "macrox=src.client:main"
         ]
     },
     packages=find_packages()
