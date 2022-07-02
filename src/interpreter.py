@@ -1,4 +1,4 @@
-from kwarg_converter import convert
+from utils.kwarg_converter import convert
 
 class Interpreter():
     def __init__(self, commands: dict) -> None:

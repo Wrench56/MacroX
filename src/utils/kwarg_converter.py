@@ -1,4 +1,4 @@
-import logger
+import utils.logger as logger
 
 def convert(command: str) -> dict:
 
