@@ -3,12 +3,19 @@ import colorama
 
 colorama.init()
 
-def error(message):
-    print(f'[{colorama.Fore.RED}ERRO{colorama.Style.RESET_ALL}]   {message}')
+def pprint(message, tag, tag_color, command=None):
+    if command:
+        command = command.upper()
+        print(f'[{tag_color}{tag}{colorama.Style.RESET_ALL}]  [@{colorama.Fore.CYAN}{command}{colorama.Style.RESET_ALL}]  {message}')
+    else:
+        print(f'[{tag_color}{tag}{colorama.Style.RESET_ALL}]  {message}')
 
-def info(message):
-    print(f'[{colorama.Fore.BLUE}INFO{colorama.Style.RESET_ALL}]   {message}')
+def error(message, command=None):
+    pprint(message=message, command=command, tag="ERRO", tag_color=colorama.Fore.RED)
 
-def warning(message):
-    print(f'[{colorama.Fore.YELLOW}WARN{colorama.Style.RESET_ALL}]   {message}')
+def info(message, command):
+    pprint(message=message, command=command, tag="INFO", tag_color=colorama.Fore.BLUE)
+
+def warning(message, command):
+    pprint(message=message, command=command, tag="WARN", tag_color=colorama.Fore.YELLOW)
 
