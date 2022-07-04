@@ -1,23 +1,19 @@
 from utils.kwarg_converter import convert
-
+from utils import prettyprint
+import tokenizer
 class Interpreter():
-    def __init__(self, commands: dict) -> None:
-        self.commands = commands
+    def __init__(self, path: str) -> None:
+        self.path = path
 
-    def execute(self, command):
-        parsed = convert(command=command)
-        print(parsed)
-        command = parsed.get(0)
+    def start(self):
+        tokens = self.tokenize()
+        prettyprint.print_tokens(tokens)
 
-        if command == None: # Empty line
-            return True
         
-        command = command.lower()
-        if command in self.commands.keys():
-            module = self.commands[command]
-            obj = getattr(module, command.capitalize())
-            obj.execute(parsed)
 
+    def tokenize(self):
+        Tokenizer = tokenizer.Tokenizer()
+        return Tokenizer.tokenize(path=self.path)
 
 
 
