@@ -5,14 +5,16 @@ import tokens.base_token as base_token
 class Tokenizer():
     ASSIGN = ':'
     TOKEN_TYPES = {
+        'Call': '^\@[a-zA-Z_$][$\w]*',
+        'Semicolon': '^\;',
         'Identifier': '^\$[a-zA-Z]*',
         'GlobalArgument': '^\%[a-zA-Z_]*',
         'Assign': '^:',
-        'DecimalNumber': '^[0-9](?![xb])',
-        'HexNumber': '^0x[0-9ABCDEFabcdef]',
-        'BinaryNumber': '^0b[01]',
+        'DecimalNumber': '^[0-9](?![xb])[$\w]*',
+        'HexNumber': '^0x[0-9ABCDEFabcdef][$\w]*',
+        'BinaryNumber': '^0b[01][$\w]*',
         'String': '^"[a-zA-Z_]*"',
-        'Boolean': '^false|true',
+        'Boolean': '^false|true[$\w]*',
         'Add': '^\+(?![+])',
         'Minus': '^\-(?![-])',
         'Times': '^\*(?![*])',
@@ -50,6 +52,7 @@ class Tokenizer():
         token_types = dict((v, k) for k, v in self.TOKEN_TYPES.items()) # flip dictionary
 
         for line in script:
+            comment = False
             line = line.strip()
             if line == '': # Empty line, easy case
                 continue
@@ -58,13 +61,18 @@ class Tokenizer():
                 continue
             
             print(f'New Line: {line}')
-            while line != '':
+            while line != '' and not comment:
                 line = line.strip()
                 for token_type in token_types.keys():
                     res = re.match(token_type, line)
                     if res:
                         tokens.append(base_token.Token(token_types[token_type], res.group(0)))
                         line = line[len(res.group(0)):].strip()
+                    else:
+                        if re.match('^\/\/.*', line) != None:
+                            comment = True
+                            break
+
         return tokens
 
 
