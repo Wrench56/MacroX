@@ -24,16 +24,15 @@ class Parser():
         for i, token in enumerate(self.tokens):
             if token.token == 'Newline':
                 nodes.append(self.next_node(self.tokens[prev_i:i]))
-                prev_i = i
+                prev_i = i+1
         
         return nodes
 
     def next_node(self, remaining_tokens: list) -> nodes.BaseNode:
-        print(remaining_tokens)
         for i, token in enumerate(remaining_tokens):
             for sftoken in self.SEARCH_FORS:
                 if token.token is sftoken:
-                    if i+1 != 2:
+                    if i+1 > 2:
                         logger.error(f'Unknown operation, the parser missed something at line: {remaining_tokens}')
 
                     node = self.SEARCH_FORS[sftoken]
@@ -41,7 +40,7 @@ class Parser():
                     op = token.token
                     left = remaining_tokens[i-1].part
 
-                    if len(remaining_tokens[i+1:]) > 1: # Should be [2:] tbh (and the next line)
+                    if len(remaining_tokens[i+1:]) > 1:
                         right = self.next_node(remaining_tokens[i+1:]) # 1.: right, 2.: operation, ... etc.
                     else:
                         right = remaining_tokens[2].part
