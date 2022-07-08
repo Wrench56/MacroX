@@ -72,7 +72,8 @@ class Tokenizer():
                         if re.match('^\/\/.*', line) != None:
                             comment = True
                             break
-
+            tokens.append(base_token.Token('Newline', '\n'))
+            
         return tokens
 
 
