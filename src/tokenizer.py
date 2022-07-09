@@ -7,13 +7,14 @@ class Tokenizer():
     TOKEN_TYPES = {
         'Call': '^\@[a-zA-Z_$][$\w]*',
         'Semicolon': '^\;',
-        'Identifier': '^\$[a-zA-Z]*',
-        'GlobalArgument': '^\%[a-zA-Z_]*',
+        'Identifier': '^\$[a-zA-Z][$\w]*',
+        'GlobalArgument': '^\%[a-zA-Z_][$\w]*',
         'Assign': '^:',
-        'DecimalNumber': '^[0-9](?![xb])[$\w]*',
+        'FloatNumber': '^[0-9]*.[0-9][$\w]*',
+        'DecimalNumber': '^[0-9](?![xb])[$\w]*(?![.])',
         'HexNumber': '^0x[0-9ABCDEFabcdef][$\w]*',
         'BinaryNumber': '^0b[01][$\w]*',
-        'String': '^"[a-zA-Z_]*"',
+        'String': '^"[a-zA-Z_ ]*"',
         'Boolean': '^false|true[$\w]*',
         'Add': '^\+(?![+])',
         'Minus': '^\-(?![-])',
@@ -26,7 +27,13 @@ class Tokenizer():
         'CloseBracket': '^\)',
         'Label': '^\[[a-zA-Z0-9_]*\]',
         'If': '^if(?![$\w])',
-        'While': '^while(?![$\w])'
+        'While': '^while(?![$\w])',
+        'Equals': '^\=\=',
+        'NotEquals': '^\!\=',
+        'Greater': '^\>(?![=])',
+        'Less': '^\<(?![=])',
+        'GreaterEquals': '^\>\=',
+        'LessEquals': '^\<\='
     }
     
               
@@ -72,7 +79,7 @@ class Tokenizer():
                         if re.match('^\/\/.*', line) != None:
                             comment = True
                             break
-            tokens.append(base_token.Token('Newline', '\n'))
+            tokens.append(base_token.Token('Newline', '\\n'))
             
         return tokens
 
