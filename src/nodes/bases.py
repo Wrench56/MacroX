@@ -1,6 +1,10 @@
 from globals import VH
 
-class BaseNode():
+class Node():
+    def __init__(self) -> None:
+        pass
+
+class BaseNode(Node):
     KIND = 'BaseNode'
     _pp_left = 'left'
     _pp_right = 'right'

@@ -11,7 +11,7 @@ class LogicalOperations(bases.BaseNode):
         self.KIND = f'{self.op}Node'
 
     def conv_num(self, num) -> int|float|str|bool|None:
-        if isinstance(num, bases.BaseNode):
+        if isinstance(num, bases.Node):
             return None
         elif isinstance(num, int):
             return num
@@ -55,7 +55,7 @@ class LogicalOperations(bases.BaseNode):
     def evaluate(self) -> bool:
         self.left = self.conv_num(self.identifier_to_value(self.left))
         
-        if isinstance(self.right, bases.BaseNode):
+        if isinstance(self.right, bases.Node):
             self.right = self.right.evaluate()
         self.right = self.conv_num(self.identifier_to_value(self.right))
         type_l = self.get_type(self.left)

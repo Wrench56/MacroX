@@ -12,7 +12,7 @@ class AssignNode(bases.BaseNode):
     def evaluate(self):
         self.right = self.identifier_to_value(self.right)
 
-        if isinstance(self.right, bases.BaseNode):
+        if isinstance(self.right, bases.Node):
             self.right = self.right.evaluate()
         
         if self.target.startswith('$'): # variable

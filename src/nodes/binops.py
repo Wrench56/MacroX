@@ -16,7 +16,7 @@ class BinaryOperations(bases.BaseNode):
             self.return_type = type
 
     def conv_num(self, num) -> int|str|float|None:
-        if isinstance(num, bases.BaseNode):
+        if isinstance(num, bases.Node):
             return self.conv_num(num.evaluate())
         elif isinstance(num, int):
             self.set_ret_type(10)
