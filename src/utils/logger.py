@@ -12,6 +12,7 @@ def pprint(message, tag, tag_color, command=None):
 
 def error(message, command=None):
     pprint(message=message, command=command, tag="ERRO", tag_color=colorama.Fore.RED)
+    exit()
 
 def info(message, command):
     pprint(message=message, command=command, tag="INFO", tag_color=colorama.Fore.BLUE)
