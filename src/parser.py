@@ -7,7 +7,13 @@ class Parser():
         'Minus': nodes.BinaryOperations,
         'Times': nodes.BinaryOperations,
         'Divide': nodes.BinaryOperations,
-        'Assign': nodes.AssignNode
+        'Assign': nodes.AssignNode,
+        'Equals': nodes.LogicalOperations,
+        'NotEquals': nodes.LogicalOperations,
+        'Greater': nodes.LogicalOperations,
+        'Less': nodes.LogicalOperations,
+        'GreaterEquals': nodes.LogicalOperations,
+        'LessEquals': nodes.LogicalOperations
     }
 
     def __init__(self, tokens) -> None:
