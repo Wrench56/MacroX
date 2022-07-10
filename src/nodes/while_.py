@@ -1,8 +1,13 @@
 from nodes import bases
+from utils import logger
 import globals
+import time
 
 class WhileNode(bases.Node):
     KIND = 'WhileNode'
+
+    EMPTY_SLEEP = 0.01
+
     def __init__(self, condition):
         self.condition = condition
 
@@ -10,9 +15,11 @@ class WhileNode(bases.Node):
     
     def evaluate(self):
         if self.body == None:
-            globals.logger.error('Unknown error: While\'s body is empty!')
+            logger.warning('While\'s body is empty!')
+            while True:
+                time.sleep(self.EMPTY_SLEEP) # Save the processor! :)
 
-        while True:
+        while self.body:
             if not self.check_condition():
                 break
 
