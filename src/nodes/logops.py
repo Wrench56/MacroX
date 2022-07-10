@@ -57,7 +57,7 @@ class LogicalOperations(bases.BaseNode):
         
         if isinstance(self.right, bases.Node):
             right = self.right.evaluate()
-        right = self.conv_num(self.identifier_to_value(right))
+        right = self.conv_num(self.identifier_to_value(self.right))
         type_l = self.get_type(left)
         type_r = self.get_type(right)
 
