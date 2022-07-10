@@ -49,49 +49,45 @@ class BinaryOperations(bases.BaseNode):
         is_num = False
 
         # Convert numbers here, since it needs evaluation!
-        self.right = self.conv_num(self.identifier_to_value(self.right))
-        self.left = self.conv_num(self.identifier_to_value(self.left))
+        right = self.conv_num(self.identifier_to_value(self.right))
+        left = self.conv_num(self.identifier_to_value(self.left))
 
-        if isinstance(self.right, str):
+        if isinstance(right, str):
             is_string = True
-        elif isinstance(self.right, int):
+        elif isinstance(right, int):
             is_num = True
         else:
-            logger.error(f'Can\'t use {self.op} operation on {self.right}')
+            logger.error(f'Can\'t use {self.op} operation on {right}')
         
-        if isinstance(self.left, str):
+        if isinstance(left, str):
             if is_num:
                 logger.error(f'Can\'t add string and number!')   
         else:
             if is_string:
                 logger.error(f'Can\'t add number and string!')
-
-        # Note: Currently I'm using str(self.right <any> self.left) to be able to skip cases with
-        # already converted cases. When converting 10 for example to base=10 integer, you would
-        # get a TypeError. "TypeError: int() can't convert non-string with explicit base"
             
         if self.op == 'Add':
             if is_num:
-                return self.conv_return((self.left + self.right))
+                return self.conv_return((left + right))
             else:
-                return self.left + self.right
+                return left + right
 
         if self.op == 'Minus':
             if is_num:
-                return self.conv_return((self.left - self.right))
+                return self.conv_return((left - right))
                 
             else:
                 logger.error(f'Can\'t use operation minus on strings!')
             
         if self.op == 'Times':
             if is_num:
-                return self.conv_return((self.left * self.right))
+                return self.conv_return((left * right))
             else:
-                return self.left * self.right # multiply strings, just like in python ('A'*10)
+                return left * right # multiply strings, just like in python ('A'*10)
             
         if self.op == 'Divide':
             if is_num:
-                res = self.left / self.right
+                res = left / right
                 return res
             else:
                 logger.error(f'Can\'t use operation division on strings!')

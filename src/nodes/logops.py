@@ -53,24 +53,24 @@ class LogicalOperations(bases.BaseNode):
 
 
     def evaluate(self) -> bool:
-        self.left = self.conv_num(self.identifier_to_value(self.left))
+        left = self.conv_num(self.identifier_to_value(self.left))
         
         if isinstance(self.right, bases.Node):
-            self.right = self.right.evaluate()
-        self.right = self.conv_num(self.identifier_to_value(self.right))
-        type_l = self.get_type(self.left)
-        type_r = self.get_type(self.right)
+            right = self.right.evaluate()
+        right = self.conv_num(self.identifier_to_value(right))
+        type_l = self.get_type(left)
+        type_r = self.get_type(right)
 
         if type_l != type_r:
             logger.error(f'Can\'t use logical operation "{self.op}" on {type_l} and {type_r}!')
 
         if self.op == 'Equals':
-            if self.left == self.right:
+            if left == right:
                 return True
             return False
 
         elif self.op == 'NotEquals':
-            if self.left != self.right:
+            if left != right:
                 return True
             return False
         
@@ -79,22 +79,22 @@ class LogicalOperations(bases.BaseNode):
 
 
         if self.op == 'Greater':
-            if self.left > self.right:
+            if left > right:
                 return True
             return False
 
         elif self.op == 'Less':
-            if self.left < self.right:
+            if left < right:
                 return True
             return False
         
         elif self.op == 'GreaterEquals':
-            if self.left >= self.right:
+            if left >= right:
                 return True
             return False
         
         elif self.op == 'LessEquals':
-            if self.left <= self.right:
+            if left <= right:
                 return True
             return False
 

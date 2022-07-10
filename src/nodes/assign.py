@@ -10,15 +10,15 @@ class AssignNode(bases.BaseNode):
         self.right = right
 
     def evaluate(self):
-        self.right = self.identifier_to_value(self.right)
+        right = self.identifier_to_value(self.right)
 
         if isinstance(self.right, bases.Node):
-            self.right = self.right.evaluate()
+            right = self.right.evaluate()
         
         if self.target.startswith('$'): # variable
-            self.set_variable(self.target, self.right)
+            self.set_variable(self.target, right)
         else:
-            self.set_global_argument(self.target, self.right)
+            self.set_global_argument(self.target, right)
 
 
     def set_variable(self, target, value):
