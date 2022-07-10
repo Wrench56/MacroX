@@ -14,9 +14,9 @@ def error(message, command=None):
     pprint(message=message, command=command, tag="ERRO", tag_color=colorama.Fore.RED)
     exit()
 
-def info(message, command):
+def info(message, command=None):
     pprint(message=message, command=command, tag="INFO", tag_color=colorama.Fore.BLUE)
 
-def warning(message, command):
+def warning(message, command=None):
     pprint(message=message, command=command, tag="WARN", tag_color=colorama.Fore.YELLOW)
 
