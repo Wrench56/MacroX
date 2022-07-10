@@ -4,6 +4,13 @@ class Node():
     def __init__(self) -> None:
         pass
 
+    def str_to_bool(self, value):
+        if value.lower() == 'true':
+            return True
+        elif value.lower() == 'false':
+            return False
+        else:
+            return value
 class BaseNode(Node):
     KIND = 'BaseNode'
     _pp_left = 'left'
