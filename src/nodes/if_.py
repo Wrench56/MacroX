@@ -11,8 +11,27 @@ class IfNode(bases.Node):
         self.else_body = None
 
     def evaluate(self):
-        pass
+        if isinstance(self.condition, bases.Node):
+            cond = self.condition.evaluate()
+            if cond == True:
+                self.evaluate_body(self.if_body)
+            elif cond == False:
+                self.evaluate_body(self.else_body)
+        else:
+            cond = self.str_to_bool(self.condition)
+            if cond == True:
+                self.evaluate_body(self.if_body)
+            elif cond == False:
+                self.evaluate_body(self.else_body)
     
+
+    def evaluate_body(self, body):
+        if isinstance(body, list):
+            for node in body:
+                node.evaluate()
+        elif isinstance(body, bases.Node):
+            body.evaluate()
+
     def set_body(self, body: list[bases.Node]|bases.Node):
         if isinstance(body, list):
             if self.if_body == None:
