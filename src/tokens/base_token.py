@@ -1,7 +1,11 @@
 class Token():
     def __init__(self, token_type, part):
         self.token = token_type
-        self.part = part
+        
+        if token_type == 'DecimalNumber':
+            self.part = int(part)
+        else:
+            self.part = part
 
     def __repr__(self) -> str:
         if self.token:
