@@ -1,5 +1,5 @@
-from pprint import PrettyPrinter
 from nodes import bases
+import globals
 
 class WhileNode(bases.Node):
     KIND = 'WhileNode'
@@ -9,7 +9,31 @@ class WhileNode(bases.Node):
         self.body = None
     
     def evaluate(self):
-        pass
+        if self.body == None:
+            globals.logger.error('Unknown error: While\'s body is empty!')
+
+        while True:
+            if not self.check_condition():
+                break
+
+            for node in self.body:
+                node.evaluate()
+                if globals.break_bool:
+                    break
+        
+
+    def check_condition(self) -> bool:
+        if isinstance(self.condition, bases.Node):
+            cond = self.condition.evaluate()
+            if cond == True:
+                return True
+            
+        else:
+            cond = self.str_to_bool(self.condition)
+            if cond == True:
+                return True
+        
+        return False
 
     def set_body(self, body):
         self.body = body.copy()
