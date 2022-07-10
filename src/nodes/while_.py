@@ -19,7 +19,7 @@ class WhileNode(bases.Node):
             while True:
                 time.sleep(self.EMPTY_SLEEP) # Save the processor! :)
 
-        while self.body:
+        while self.body and not globals.break_bool:
             if not self.check_condition():
                 break
 

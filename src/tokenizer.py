@@ -30,6 +30,7 @@ class Tokenizer():
         'ElseIf': '^elif(?![$\w])',
         'Else': '^else(?![$\w])',
         'While': '^while(?![$\w])',
+        'Break': '^break',
         'Equals': '^\=\=',
         'NotEquals': '^\!\=',
         'Greater': '^\>(?![=])',

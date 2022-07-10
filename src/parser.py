@@ -20,7 +20,9 @@ class Parser():
         'ElseIf': nodes.IfNode,
         'Else': None,
         'OpenCurlyBracket': None,
-        'CloseCurlyBracket': None
+        'CloseCurlyBracket': None,
+        'Break': nodes.BreakNode
+
     }
 
     def __init__(self, tokens) -> None:
@@ -54,8 +56,7 @@ class Parser():
     def next_node(self, remaining_tokens: list) -> nodes.BaseNode:
         for i, token in enumerate(remaining_tokens):
             for sftoken in self.SEARCH_FORS:
-                if token.token is sftoken:
-                    
+                if token.token is sftoken:  
                     if sftoken in ['If', 'While', 'ElseIf']:
                         if len(remaining_tokens[1:]) > 1:
                             cond = self.next_node(remaining_tokens[1:])
@@ -78,6 +79,8 @@ class Parser():
                     elif sftoken == 'CloseCurlyBracket':
                         self.body_flag = False
                         return None
+                    elif sftoken == 'Break':
+                        return nodes.BreakNode()
                     else:
                         if i+1 > 2:
                             logger.error(f'Unknown operation, the parser missed something at line: {remaining_tokens}')

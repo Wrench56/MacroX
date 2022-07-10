@@ -5,3 +5,4 @@ from nodes.binops import BinaryOperations
 from nodes.logops import LogicalOperations
 from nodes.if_ import IfNode
 from nodes.while_ import WhileNode
+from nodes.break_ import BreakNode
