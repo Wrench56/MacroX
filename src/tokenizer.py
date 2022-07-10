@@ -27,6 +27,8 @@ class Tokenizer():
         'CloseBracket': '^\)',
         'Label': '^\[[a-zA-Z0-9_]*\]',
         'If': '^if(?![$\w])',
+        'ElseIf': '^elif(?![$\w])',
+        'Else': '^else(?![$\w])',
         'While': '^while(?![$\w])',
         'Equals': '^\=\=',
         'NotEquals': '^\!\=',
