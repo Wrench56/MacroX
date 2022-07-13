@@ -1,5 +1,6 @@
 import nodes
 from utils import logger
+from globals import JH
 from tokens.base_token import Token
 from utils.dualstack import DualStack
 
@@ -23,7 +24,8 @@ class Parser():
         'OpenCurlyBracket': None,
         'CloseCurlyBracket': None,
         'Break': nodes.BreakNode,
-        'Label': nodes.LabelNode
+        'Label': nodes.LabelNode,
+        'Jump': nodes.JumpNode
 
     }
 
@@ -93,6 +95,8 @@ class Parser():
                         pass
                     elif sftoken == 'Label':
                         node = self.SEARCH_FORS[sftoken]()
+                        JH.setup_jump(token.part, node)
+
                         self.body.append(node) # append sub-node to root-node
                         self.stack.push(self.block_ptr, self.body) # push
                         self.block_ptr = node
@@ -105,6 +109,8 @@ class Parser():
                         return None
                     elif sftoken == 'Break':
                         return nodes.BreakNode()
+                    elif sftoken == 'Jump':
+                        return nodes.JumpNode(remaining_tokens[1].part)
                     else:
                         if i+1 > 2:
                             logger.error(f'Unknown operation, the parser missed something at line: {remaining_tokens}')

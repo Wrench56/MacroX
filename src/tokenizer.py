@@ -36,7 +36,9 @@ class Tokenizer():
         'Greater': '^\>(?![=])',
         'Less': '^\<(?![=])',
         'GreaterEquals': '^\>\=',
-        'LessEquals': '^\<\='
+        'LessEquals': '^\<\=',
+        'Jump': '^jump(?![$\w])',
+        'LabelName': '^\~[a-zA-Z][$\w]*'
     }
     
               
