@@ -9,10 +9,12 @@ class Interpreter():
     def start(self):
         tokens = self.tokenize(self.path)
         prettyprint.print_tokens(tokens)
-        print('\n'*2)
+        print()
 
-        nodes = self.parse(tokens)
-        print(nodes)
+        root = self.parse(tokens)
+        print(root)
+
+        root.evaluate()
 
     def tokenize(self, path):
         Tokenizer = tokenizer.Tokenizer()
