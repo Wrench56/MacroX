@@ -1,6 +1,7 @@
 import nodes
 from utils import logger
 from tokens.base_token import Token
+from utils.dualstack import DualStack
 
 class Parser():
     SEARCH_FORS = {
@@ -28,12 +29,14 @@ class Parser():
     def __init__(self, tokens) -> None:
         self.tokens = tokens
 
-        self.body_flag = False
+        self.body_flag = None
         self.block_ptr = None
+        self.elif_cases = 0
 
     def parse(self) -> list: # Just sort tokens by priority. Then just parse normally without any complication
-        nodes = []
-        body = []
+        self.body = []
+        self.stack = DualStack()
+        self.block_ptr = nodes.Root()
 
         self.tokens = self.preprocess(self.tokens)
         prev_i = 0
@@ -41,17 +44,31 @@ class Parser():
             if token.token == 'Newline':
                 node = self.next_node(self.tokens[prev_i:i])
                 if node != None:
-                    if not self.body_flag:
-                        nodes.append(node)
+                    self.body.append(node)
+                if self.body_flag is False: # pop
+                    special_case = False
+                    if len(self.tokens)-1 > i:
+                        special_case = self.tokens[i+1].token in ['ElseIf', 'Else', 'OpenCurlyBracket']
+                    if not special_case: # check if pop needed
+                        for _ in range(self.elif_cases+1):
+                            self.block_ptr.set_body(self.body)
+                            self.body.clear()
+
+                            self.block_ptr, self.body = self.stack.pop()
+                            self.body_flag = True
+
+                        self.elif_cases = 0
                     else:
-                        body.append(node)
-                if body != [] and not self.body_flag: # add to ptr
-                    self.block_ptr.set_body(body)
-                    body.clear()
+                        if self.tokens[i+1].token in ['ElseIf', 'Else']:
+                            if self.tokens[i+1].token == 'ElseIf':
+                                self.elif_cases += 1
+                            self.block_ptr.set_body(self.body)
+                            self.body.clear()
 
                 prev_i = i+1
 
-        return nodes
+        self.block_ptr.set_body(self.body)
+        return self.block_ptr
 
     def next_node(self, remaining_tokens: list) -> nodes.BaseNode:
         for i, token in enumerate(remaining_tokens):
@@ -64,13 +81,13 @@ class Parser():
                             cond = remaining_tokens[1].part
 
                         node = self.SEARCH_FORS[sftoken](cond)
-                        if sftoken == 'ElseIf':
-                            self.block_ptr.set_body(node) # ! IfNode.set_body() should automatically adjust the if-body and else-body (once if-body fills up, switch to else-body) 
+                        self.body.append(node) # append sub-node to root-node
+                        self.stack.push(self.block_ptr, self.body) # push
                         self.block_ptr = node
-                        if sftoken == 'ElseIf':
-                            node = None # We don't want to see this in the regular nodes list!
+                        self.body.clear() # clear the current body list
 
-                        return node
+                        return None
+
                     elif sftoken == 'Else': # I should do bug-checks here
                         pass
                     elif sftoken == 'OpenCurlyBracket':
@@ -94,7 +111,6 @@ class Parser():
                             right = self.next_node(remaining_tokens[i+1:]) # 1.: right, 2.: operation, ... etc.
                         else:
                             right = remaining_tokens[2].part
-
                         return node(op, left, right) # Returns a non-evaluated node object
 
     def preprocess(self, tokens):
