@@ -22,7 +22,8 @@ class Parser():
         'Else': None,
         'OpenCurlyBracket': None,
         'CloseCurlyBracket': None,
-        'Break': nodes.BreakNode
+        'Break': nodes.BreakNode,
+        'Label': nodes.LabelNode
 
     }
 
@@ -90,6 +91,12 @@ class Parser():
 
                     elif sftoken == 'Else': # I should do bug-checks here
                         pass
+                    elif sftoken == 'Label':
+                        node = self.SEARCH_FORS[sftoken]()
+                        self.body.append(node) # append sub-node to root-node
+                        self.stack.push(self.block_ptr, self.body) # push
+                        self.block_ptr = node
+                        self.body.clear() # clear the current body list
                     elif sftoken == 'OpenCurlyBracket':
                         self.body_flag = True
                         return None
