@@ -10,3 +10,4 @@ from nodes.while_ import WhileNode
 from nodes.break_ import BreakNode
 from nodes.label import LabelNode
 from nodes.jump import JumpNode
+from nodes.call import CallNode
