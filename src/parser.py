@@ -25,8 +25,8 @@ class Parser():
         'CloseCurlyBracket': None,
         'Break': nodes.BreakNode,
         'Label': nodes.LabelNode,
-        'Jump': nodes.JumpNode
-
+        'Jump': nodes.JumpNode,
+        'Call': nodes.CallNode
     }
 
     def __init__(self, tokens) -> None:
@@ -111,6 +111,8 @@ class Parser():
                         return nodes.BreakNode()
                     elif sftoken == 'Jump':
                         return nodes.JumpNode(remaining_tokens[1].part)
+                    elif sftoken == 'Call':
+                        return nodes.CallNode(token.part, remaining_tokens[1:])
                     else:
                         if i+1 > 2:
                             logger.error(f'Unknown operation, the parser missed something at line: {remaining_tokens}')
