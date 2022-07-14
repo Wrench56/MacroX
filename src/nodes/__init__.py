@@ -1,4 +1,4 @@
-from nodes.bases import BaseNode
+from nodes.bases import Node
 
 from nodes.root import Root
 

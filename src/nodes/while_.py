@@ -3,7 +3,7 @@ from utils import logger
 import globals
 import time
 
-class WhileNode(bases.Node):
+class WhileNode(bases.BlockNode):
     KIND = 'WhileNode'
 
     EMPTY_SLEEP = 0.01
@@ -48,7 +48,7 @@ class WhileNode(bases.Node):
     def prettyprint(self, indent):
         indent_str = ' '*indent
         condition = self.condition
-        if isinstance(condition, bases.BaseNode):
+        if isinstance(condition, bases.ForkNode):
             condition = condition.prettyprint(indent=(indent+4))
 
         body_str = ''

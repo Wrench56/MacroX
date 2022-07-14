@@ -1,6 +1,7 @@
 from globals import VH
 
 class Node():
+    KIND = 'Node'
     def __init__(self) -> None:
         pass
 
@@ -11,6 +12,9 @@ class Node():
             return False
         else:
             return value
+    
+    def evaluate(self):
+        pass
 
     def __repr__(self) -> str:
         return self.prettyprint(0)
@@ -18,14 +22,11 @@ class Node():
     def __str__(self) -> str:
         return self.__repr__()
 
-class BaseNode(Node):
-    KIND = 'BaseNode'
+class ForkNode(Node):
+    KIND = 'ForkNode'
     _pp_left = 'left'
     _pp_right = 'right'
     def __init__(self):
-        pass
-    
-    def evaluate(self):
         pass
 
     def prettyprint(self, indent: int) -> str:
@@ -33,7 +34,7 @@ class BaseNode(Node):
         left = self.left
 
         right = self.right
-        if isinstance(right, BaseNode):
+        if isinstance(right, ForkNode):
             right = right.prettyprint(indent=(indent+4))
 
 
@@ -47,3 +48,18 @@ class BaseNode(Node):
         return ast
     
 
+class BlockNode(Node):
+    KIND = 'BlockNode'
+    def __init__(self) -> None:
+        self.body = []
+
+    def set_body(self, body: list[Node]):
+        self.body = body.copy()
+
+    def prettyprint(self, indent):
+        indent_str = ' '*indent
+        body_str = ''
+        for node in self.body:
+            body_str += node.prettyprint(indent=indent+4)
+
+        return f'{self.KIND} (\n{indent_str}    Body: {body_str}\n{indent_str})'

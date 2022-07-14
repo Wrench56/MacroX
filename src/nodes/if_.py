@@ -32,22 +32,16 @@ class IfNode(bases.Node):
         elif isinstance(body, bases.Node):
             body.evaluate()
 
-    def set_body(self, body: list[bases.Node]|bases.Node):
-        if isinstance(body, list):
+    def set_body(self, body: list[bases.Node]):
             if self.if_body == None:
                 self.if_body = body.copy()
             else:
                 self.else_body = body.copy()
-        elif isinstance(body, IfNode):
-            if self.if_body != None:
-                self.else_body = body
-            else:
-                logger.error('Unknown error')
 
     def prettyprint(self, indent):
         indent_str = ' '*indent
         condition = self.condition
-        if isinstance(condition, bases.BaseNode):
+        if isinstance(condition, bases.ForkNode):
             condition = condition.prettyprint(indent=(indent+4))
 
 

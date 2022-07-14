@@ -1,7 +1,7 @@
 from nodes import bases
 from globals import VH
 
-class AssignNode(bases.BaseNode):
+class AssignNode(bases.ForkNode):
     KIND = 'AssignNode'
     _pp_left = 'target'
 

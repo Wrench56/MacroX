@@ -1,7 +1,7 @@
 from nodes import bases
 from utils import logger
 
-class BinaryOperations(bases.BaseNode):
+class BinaryOperations(bases.ForkNode):
     KIND = 'BinaryOperationsNode'
     def __init__(self, op, left, right) -> None:
         self.op = op

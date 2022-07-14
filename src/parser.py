@@ -73,7 +73,7 @@ class Parser():
         self.block_ptr.set_body(self.body)
         return self.block_ptr
 
-    def next_node(self, remaining_tokens: list) -> nodes.BaseNode:
+    def next_node(self, remaining_tokens: list) -> nodes.Node:
         for i, token in enumerate(remaining_tokens):
             for sftoken in self.SEARCH_FORS:
                 if token.token is sftoken:  
