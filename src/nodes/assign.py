@@ -1,5 +1,5 @@
 from nodes import bases
-from globals import VH
+from globals import VH, GAH
 
 class AssignNode(bases.ForkNode):
     KIND = 'AssignNode'
@@ -25,4 +25,5 @@ class AssignNode(bases.ForkNode):
         VH.set(target, value) # VH => VariableHandlers
         print(VH.variables)
     def set_global_argument(self, target, value):
-        print(f'Set global argument {target}: {value}')
+        GAH.set(target, value) # GAH => GlobalArgumentHandler
+        print(GAH.arguments)

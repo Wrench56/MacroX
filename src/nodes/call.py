@@ -1,18 +1,27 @@
 from nodes import bases
 from utils import logger
-from globals import Importer
+from globals import Importer, GAH
 
 class CallNode(bases.Node):
     KIND = 'CallNode'
     def __init__(self, command: str, arguments: list) -> None:
         self.command = command[1:]
+        print(self.command)
         self.arguments = arguments
 
         self.check_sequence()
 
     def evaluate(self):
         args_dict = self.create_dict(self.arguments)
-        command_object = Importer.get_command(self.command)(args_dict)
+
+        ga_list = GAH.get_list()
+        command_class = Importer.get_command(self.command)
+        for arg in command_class.arg_parse_list:
+            if arg in ga_list:
+                if arg not in args_dict.keys(): # Else, it is counted as overwritten!
+                    args_dict[arg] = ga_list.get(arg)
+
+        command_object = command_class(args_dict)
         ret = command_object.evaluate()
 
         return ret 
