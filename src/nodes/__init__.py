@@ -11,3 +11,4 @@ from nodes.break_ import BreakNode
 from nodes.label import LabelNode
 from nodes.jump import JumpNode
 from nodes.call import CallNode
+from nodes.sleep import SleepNode
