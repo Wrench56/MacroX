@@ -10,7 +10,7 @@ class Tokenizer():
         'Identifier': '^\$[a-zA-Z][$\w]*',
         'GlobalArgument': '^\%[a-zA-Z_][$\w]*',
         'Assign': '^:',
-        'FloatNumber': '^[0-9]*.[0-9][$\w]*',
+        'FloatNumber': '^[0-9]*\.[0-9][$\w]*',
         'DecimalNumber': '^[0-9](?![xb])[$\w]*(?![.])',
         'HexNumber': '^0x[0-9ABCDEFabcdef][$\w]*',
         'BinaryNumber': '^0b[01][$\w]*',
