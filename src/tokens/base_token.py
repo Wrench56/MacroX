@@ -4,6 +4,8 @@ class Token():
         
         if token_type == 'DecimalNumber':
             self.part = int(part)
+        elif token_type == 'String':
+            self.part = part[1:-1]
         else:
             self.part = part
 
