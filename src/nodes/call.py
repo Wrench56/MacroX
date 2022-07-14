@@ -1,5 +1,6 @@
 from nodes import bases
 from utils import logger
+from globals import Importer
 
 class CallNode(bases.Node):
     KIND = 'CallNode'
@@ -11,7 +12,8 @@ class CallNode(bases.Node):
 
     def evaluate(self):
         args_dict = self.create_dict(self.arguments)
-        
+        command_object = Importer.get_command(self.command)(args_dict)
+        command_object.evaluate()
 
 
     def create_dict(self, args: list):
