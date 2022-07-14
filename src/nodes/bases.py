@@ -63,3 +63,10 @@ class BlockNode(Node):
             body_str += node.prettyprint(indent=indent+4)
 
         return f'{self.KIND} (\n{indent_str}    Body: {body_str}\n{indent_str})'
+
+class InstructionNode(Node):
+    def __init__(self) -> None:
+        pass
+
+    def prettyprint(self, indent) -> str:
+        return f'{self.KIND}()'
