@@ -9,17 +9,23 @@ class CallNode(bases.Node):
         print(self.command)
         self.arguments = arguments
 
-        self.check_sequence()
+        self.check_raw_sequence()
 
     def evaluate(self):
-        args_dict = self.create_dict(self.arguments)
+        args_dict = {}
 
         ga_list = GAH.get_list()
         command_class = Importer.get_command(self.command)
+        global_match = False
+
         for arg in command_class.arg_parse_list:
             if arg in ga_list:
-                if arg not in args_dict.keys(): # Else, it is counted as overwritten!
-                    args_dict[arg] = ga_list.get(arg)
+                global_match = True  
+                args_dict[arg] = ga_list.get(arg)
+
+        args_dict.update(self.create_dict(self.arguments))
+        if global_match:
+            self.check_sequence(args_dict)
 
         command_object = command_class(args_dict)
         ret = command_object.evaluate()
@@ -46,8 +52,16 @@ class CallNode(bases.Node):
 
         return ret_dict
 
+    def check_sequence(self, args):
+        kwarg = False
+        for element in args.keys():
+            if isinstance(element, str):
+                kwarg = True
+            else:
+                if kwarg:
+                    logger.error('You tried to use a regular argument with global arguments! That\'s a no go! Use keyword arguments instead!')
 
-    def check_sequence(self):
+    def check_raw_sequence(self):
         key_argument_flag = False
         skip_flag = False
 
