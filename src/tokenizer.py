@@ -15,7 +15,7 @@ class Tokenizer():
         'DecimalNumber': '^[0-9](?![xb])[$\w]*(?![.])',
         'HexNumber': '^0x[0-9ABCDEFabcdef][$\w]*',
         'BinaryNumber': '^0b[01][$\w]*',
-        'String': '^"[a-zA-Z_ ]*"',
+        'String': '^"(\\"|[^"]+)"',
         'Boolean': '^false|true[$\w]*',
         'Add': '^\+(?![+])',
         'Minus': '^\-(?![-])',
