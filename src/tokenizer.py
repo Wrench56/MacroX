@@ -6,6 +6,7 @@ class Tokenizer():
     ASSIGN = ':'
     TOKEN_TYPES = {
         'Call': '^\@[a-zA-Z_$][$\w]*',
+        'KeywordArgument': '^[a-zA-Z0-9_][$\w]*[ ]*=',
         'Semicolon': '^\;',
         'Identifier': '^\$[a-zA-Z][$\w]*',
         'GlobalArgument': '^\%[a-zA-Z_][$\w]*',
