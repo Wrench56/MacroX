@@ -13,6 +13,3 @@ class JumpNode(bases.Node):
         indent_str = ' '*indent
 
         return f'{self.KIND} (\n{indent_str}    Label: {self.label}\n{indent_str})'
-
-    def __repr__(self):
-        return self.prettyprint(0)

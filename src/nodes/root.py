@@ -19,6 +19,3 @@ class Root(bases.Node):
                 body_str += node.prettyprint(indent=4)
 
         return f'{self.KIND} (\n    Body: {body_str}\n)'
-
-    def __repr__(self) -> str:
-        return self.prettyprint()

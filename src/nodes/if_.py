@@ -44,9 +44,6 @@ class IfNode(bases.Node):
             else:
                 logger.error('Unknown error')
 
-    def __repr__(self) -> str:
-        return self.prettyprint(0)
-
     def prettyprint(self, indent):
         indent_str = ' '*indent
         condition = self.condition

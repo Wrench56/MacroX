@@ -11,15 +11,19 @@ class Node():
             return False
         else:
             return value
+
+    def __repr__(self) -> str:
+        return self.prettyprint(0)
+
+    def __str__(self) -> str:
+        return self.__repr__()
+
 class BaseNode(Node):
     KIND = 'BaseNode'
     _pp_left = 'left'
     _pp_right = 'right'
     def __init__(self):
         pass
-    
-    def __repr__(self) -> str:
-        return self.prettyprint(0)
     
     def evaluate(self):
         pass

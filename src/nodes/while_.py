@@ -58,6 +58,3 @@ class WhileNode(bases.Node):
                 body_str += node.prettyprint(indent=indent+4)
 
         return f'{self.KIND} (\n{indent_str}    Condition: {condition}\n{indent_str}    Body: {body_str}\n{indent_str})'
-
-    def __repr__(self) -> str:
-        return self.prettyprint(indent=0)
