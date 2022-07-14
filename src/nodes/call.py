@@ -13,7 +13,9 @@ class CallNode(bases.Node):
     def evaluate(self):
         args_dict = self.create_dict(self.arguments)
         command_object = Importer.get_command(self.command)(args_dict)
-        command_object.evaluate()
+        ret = command_object.evaluate()
+
+        return ret 
 
 
     def create_dict(self, args: list):
@@ -26,10 +28,11 @@ class CallNode(bases.Node):
                 skip_flag = False
                 continue
             if token.token == 'KeywordArgument':
-                ret_dict[token.part.split(' ')[0]] = args[i+1]
+                ret_dict[token.part.split(' ')[0]] = self.identifier_to_value(args[i+1].part)
                 skip_flag = True
             else:
-                ret_dict[counter] = token.part
+                val = self.identifier_to_value(token.part)
+                ret_dict[counter] = val
                 counter += 1
 
         return ret_dict

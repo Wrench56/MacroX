@@ -13,9 +13,15 @@ class Node():
         else:
             return value
     
+    def identifier_to_value(self, ast):
+        if isinstance(ast, str):
+            if ast.startswith('$'):
+                return VH.get(ast)
+
+        return ast
+
     def evaluate(self):
         pass
-
     def __repr__(self) -> str:
         return self.prettyprint(0)
 
@@ -39,13 +45,6 @@ class ForkNode(Node):
 
 
         return f'{self.KIND} (\n{indent_str}    {self._pp_left}: {left}\n{indent_str}    {self._pp_right}: {right}\n{indent_str})'
-
-    def identifier_to_value(self, ast):
-        if isinstance(ast, str):
-            if ast.startswith('$'):
-                return VH.get(ast)
-
-        return ast
     
 
 class BlockNode(Node):
