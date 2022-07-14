@@ -12,7 +12,7 @@ class Root(bases.Node):
     def set_body(self, body):
         self.body = body.copy()
 
-    def prettyprint(self):
+    def prettyprint(self, _):
         body_str = ''
         if isinstance(self.body, list):
             for node in self.body:
