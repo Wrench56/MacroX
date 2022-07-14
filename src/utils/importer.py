@@ -17,8 +17,12 @@ class Importer():
                 logger.error(f'Same named command already imported! (Module name: {module_name})')
     
     def get_command(self, command_name):
+        command_name = command_name.lower()
         if command_name in self.commands.keys():
-            return self.commands[command_name]
+            file_ = self.commands[command_name]
+            cmd_obj = getattr(file_, command_name.capitalize())
+            return cmd_obj
+
         else:
             logger.error(f'No such command: {command_name}')
 
