@@ -6,7 +6,6 @@ class CallNode(bases.Node):
     KIND = 'CallNode'
     def __init__(self, command: str, arguments: list) -> None:
         self.command = command[1:]
-        print(self.command)
         self.arguments = arguments
 
         self.check_raw_sequence()
@@ -43,7 +42,7 @@ class CallNode(bases.Node):
                 skip_flag = False
                 continue
             if token.token == 'KeywordArgument':
-                ret_dict[token.part.split(' ')[0]] = self.identifier_to_value(args[i+1].part)
+                ret_dict[token.part[:-1].strip()] = self.identifier_to_value(args[i+1].part)
                 skip_flag = True
             else:
                 val = self.identifier_to_value(token.part)
