@@ -5,7 +5,7 @@ class Token():
         if token_type == 'DecimalNumber':
             self.part = int(part)
         elif token_type == 'String':
-            self.part = part[1:-1]
+            self.part = part[1:-1].replace('\\n', '\n')
         else:
             self.part = part
 
