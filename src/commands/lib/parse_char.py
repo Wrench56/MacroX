@@ -1,4 +1,5 @@
 def parse_char(string) -> int:
+    skip_count = 0
     ret_lst = []
     chr_ord = None
     for i, char in enumerate(string):
