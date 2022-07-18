@@ -1,5 +1,6 @@
 from utils import logger
 from commands.base_command import Command
+from commands.lib import parse_char
 import win32con
 import win32api
 
@@ -22,18 +23,5 @@ class Send(Command):
             except:
                 logger.error('Could not convert non-string value to string!', command='send')
 
-        chr_ord = None
-        for i, char in enumerate(string):
-            if skip_count > 0:
-                skip_count -= 1
-                continue
-            if char == '#':
-                if len(string)-1 >= i+3:
-                    if string[i+1] == 'E' and string[i+2] == 'S' and string[i+3] == 'C':
-                        chr_ord = 27
-                        skip_count = 3
-
-            else:
-                chr_ord = ord(char)
-            print(chr_ord)
-            win32api.PostMessage(hwnd, win32con.WM_CHAR, chr_ord, 0)
+        for char in parse_char.parse_char(string):
+            win32api.PostMessage(hwnd, win32con.WM_CHAR, char, 0)
