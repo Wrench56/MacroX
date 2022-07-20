@@ -7,6 +7,7 @@ import time
 
 class Dxsend(Command):
     arg_parse_list = ['string', 'auto_cap']
+    DELAY = 0.005
     def __init__(self, args) -> None:
         super().__init__(args)
     
@@ -33,5 +34,5 @@ class Dxsend(Command):
             else:
                 funcs.pressKey(char)
             
-            time.sleep(0.05)
+            time.sleep(self.DELAY)
             funcs.releaseKey(char)
