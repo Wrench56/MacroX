@@ -18,7 +18,7 @@ class IfNode(bases.Node):
             elif cond == False:
                 self.evaluate_body(self.else_body)
         else:
-            self.condition = self.identifier_to_value(self.condition)
+            cond = self.identifier_to_value(self.condition)
             if cond == True:
                 self.evaluate_body(self.if_body)
             elif cond == False:

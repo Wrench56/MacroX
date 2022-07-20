@@ -36,7 +36,7 @@ class WhileNode(bases.BlockNode):
                 return True
             
         else:
-            self.condition = self.identifier_to_value(self.condition)
+            cond = self.identifier_to_value(self.condition)
             if cond == True:
                 return True
         
