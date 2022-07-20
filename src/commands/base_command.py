@@ -32,9 +32,9 @@ class Command():
                 return ret
 
         arg = self.args.get(self.arg_parse_list[self.counter])
-        if not arg and not self.star_parsed:
+        if arg is None and not self.star_parsed:
             arg = self.args.get(self.counter)
-        if not arg:
+        if arg is None:
             arg = None
         self.counter += 1
 
