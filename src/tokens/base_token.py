@@ -6,6 +6,11 @@ class Token():
             self.part = int(part)
         elif token_type == 'String':
             self.part = part[1:-1].replace('\\n', '\n')
+        elif token_type == 'Boolean':
+            if part.lower() == 'false':
+                self.part = False
+            else:
+                self.part = True
         else:
             self.part = part
 

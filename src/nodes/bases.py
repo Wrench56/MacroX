@@ -5,14 +5,6 @@ class Node():
     def __init__(self) -> None:
         pass
 
-    def str_to_bool(self, value):
-        if value.lower() == 'true':
-            return True
-        elif value.lower() == 'false':
-            return False
-        else:
-            return value
-    
     def identifier_to_value(self, ast):
         if isinstance(ast, str):
             if ast.startswith('$'):
