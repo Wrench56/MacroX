@@ -7,5 +7,6 @@ Importer = importer.Importer()
 Importer.import_module('commands/win32api')
 Importer.import_module('commands/io')
 Importer.import_module('commands/time')
+Importer.import_module('commands/directx')
 
 break_bool = False
