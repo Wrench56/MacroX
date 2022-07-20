@@ -23,5 +23,5 @@ class Send(Command):
             except:
                 logger.error('Could not convert non-string value to string!', command='send')
 
-        for char in parse_char.parse_char(string):
+        for char in parse_char.string2ascii(string):
             win32api.PostMessage(hwnd, win32con.WM_CHAR, char, 0)
