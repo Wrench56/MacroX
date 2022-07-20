@@ -140,7 +140,7 @@ def string2ascii(string) -> int:
     
     return ret_lst
 
-def string2directx(string):
+def string2directx(string, auto_cap=False):
     skip_count = 0
     ret_lst = []
     for i, char in enumerate(string):
@@ -149,14 +149,22 @@ def string2directx(string):
             continue
         if char == '#':
             if len(string)-1 >= i+3:
-                ord_ = DirectXChars.chars.get(str(string[i+1]+string[i+2]+string[i+3]))
+                ord_ = DirectXChars.chars.get(str(string[i+1].upper()+string[i+2].upper()+string[i+3].upper()))
                 if ord_:
                     skip_count = 3
                 else:
-                    ord_ = ord(char)
-        else:
-            ord_ = DirectXChars.chars.get(char)
+                    ord_ = DirectXChars.chars.get(char.upper())
+                    if auto_cap and char == char.upper():
+                        # MAX VALUE FOR DIRECTX KEYS: 0xDF
+                        # SO I ADD 1000 FOR EVERY CHAR THAT NEEDS SHIFT!
+                        ord_ += 1000
 
+        else:
+            ord_ = DirectXChars.chars.get(char.upper())
+            if auto_cap and char == char.upper():
+                # MAX VALUE FOR DIRECTX KEYS: 0xDF
+                # SO I ADD 1000 FOR EVERY CHAR THAT NEEDS SHIFT!
+                ord_ += 1000
         ret_lst.append(ord_)
     
     return ret_lst
