@@ -40,7 +40,8 @@ class Tokenizer():
         'LessEquals': '^\<\=',
         'Jump': '^jump(?![$\w])',
         'LabelName': '^\~[a-zA-Z][$\w]*',
-        'Sleep': '^sleep(?![$\w])'
+        'Sleep': '^sleep(?![$\w])',
+        'Import': 'import(?![$\w])'
     }
     
               

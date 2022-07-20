@@ -12,3 +12,4 @@ from nodes.label import LabelNode
 from nodes.jump import JumpNode
 from nodes.call import CallNode
 from nodes.sleep import SleepNode
+from nodes.import_ import ImportNode

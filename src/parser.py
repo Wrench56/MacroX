@@ -27,7 +27,8 @@ class Parser():
         'Label': nodes.LabelNode,
         'Jump': nodes.JumpNode,
         'Call': nodes.CallNode,
-        'Sleep': nodes.SleepNode
+        'Sleep': nodes.SleepNode,
+        'Import': nodes.ImportNode
     }
 
     def __init__(self, tokens) -> None:
@@ -110,7 +111,7 @@ class Parser():
                         return None
                     elif sftoken == 'Break':
                         return nodes.BreakNode()
-                    elif sftoken in ['Jump', 'Sleep']:
+                    elif sftoken in ['Jump', 'Sleep', 'Import']:
                         return self.SEARCH_FORS[sftoken](remaining_tokens[1].part)
                     elif sftoken == 'Call':
                         return nodes.CallNode(token.part, remaining_tokens[1:])
