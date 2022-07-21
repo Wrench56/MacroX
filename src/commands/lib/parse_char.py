@@ -56,7 +56,7 @@ class DirectXChars():
         'RSH': 54,
         'NM*': 55,
         'LAT': 56,
-        'SPC': 57,
+        ' ': 57,
         'CPL': 58,
         'F1_': 59,
         'F2_': 60,
@@ -143,6 +143,7 @@ def string2ascii(string) -> int:
 def string2directx(string, auto_cap=False):
     skip_count = 0
     ret_lst = []
+
     for i, char in enumerate(string):
         if skip_count > 0:
             skip_count -= 1
