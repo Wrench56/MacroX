@@ -19,4 +19,4 @@ class Dxpress(Command):
                 logger.error('Could not convert non-string value to string!', command='dxpress')
 
         char_ = parse_char.string2directx(char)[0] #! This will press only 1 key!
-        funcs.pressKey(hex(char_))
+        funcs.pressKey(char_)

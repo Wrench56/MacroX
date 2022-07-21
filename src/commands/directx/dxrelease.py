@@ -19,4 +19,4 @@ class Dxrelease(Command):
                 logger.error('Could not convert non-string value to string!', command='dxrelease')
 
         char_ = parse_char.string2directx(char)[0] #! This will release only 1 key!
-        funcs.releaseKey(hex(char_))
+        funcs.releaseKey(char_)
