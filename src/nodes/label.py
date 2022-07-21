@@ -5,8 +5,8 @@ class LabelNode(bases.BlockNode):
     def __init__(self) -> None:
         self.body = []
 
-    def evaluate(self, jump=False):
-        super().evaluate()
+    def evaluate(self, jump=False, ignore_int = False):
+        super().evaluate(ignore_int)
         if jump:
             for node in self.body:
                 super().evaluate()

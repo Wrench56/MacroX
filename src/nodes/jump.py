@@ -6,8 +6,8 @@ class JumpNode(bases.InstructionNode):
     def __init__(self, label) -> None:
         self.label = label[1:] #! label[1:], since the first char is "~"
 
-    def evaluate(self):
-        super().evaluate()
+    def evaluate(self, ignore_int = False):
+        super().evaluate(ignore_int)
         JH.jump(self.label)
 
     def prettyprint(self, indent):

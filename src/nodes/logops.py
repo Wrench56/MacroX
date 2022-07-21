@@ -52,8 +52,8 @@ class LogicalOperations(bases.ForkNode):
         
 
 
-    def evaluate(self) -> bool:
-        super().evaluate()
+    def evaluate(self, ignore_int = False) -> bool:
+        super().evaluate(ignore_int)
         left = self.conv_num(self.identifier_to_value(self.left))
         
         if isinstance(self.right, bases.Node):

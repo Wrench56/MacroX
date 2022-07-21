@@ -6,6 +6,6 @@ class BreakNode(bases.InstructionNode):
     def __init__(self) -> None:
         pass
 
-    def evaluate(self):
-        super().evaluate()
+    def evaluate(self, ignore_int = False):
+        super().evaluate(ignore_int)
         globals.break_bool = True

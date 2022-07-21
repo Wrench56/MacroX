@@ -9,8 +9,8 @@ class AssignNode(bases.ForkNode):
         self.left, self.target = target, target
         self.right = right
 
-    def evaluate(self):
-        super().evaluate()
+    def evaluate(self, ignore_int = False):
+        super().evaluate(ignore_int)
         right = self.identifier_to_value(self.right)
 
         if isinstance(self.right, bases.Node):

@@ -10,8 +10,8 @@ class IfNode(bases.Node):
         self.if_body = None
         self.else_body = None
 
-    def evaluate(self):
-        super().evaluate()
+    def evaluate(self, ignore_int = False):
+        super().evaluate(ignore_int)
         if isinstance(self.condition, bases.Node):
             cond = self.condition.evaluate()
             if cond == True:

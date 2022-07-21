@@ -13,8 +13,8 @@ class WhileNode(bases.BlockNode):
 
         self.body = None
     
-    def evaluate(self):
-        super().evaluate()
+    def evaluate(self, ignore_int = False):
+        super().evaluate(ignore_int)
         if self.body == None:
             logger.warning('While\'s body is empty!')
             while True:

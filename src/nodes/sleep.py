@@ -6,8 +6,8 @@ class SleepNode(bases.InstructionNode):
     def __init__(self, time: int) -> None:
         self.time = time
 
-    def evaluate(self):
-        super().evaluate()
+    def evaluate(self, ignore_int = False):
+        super().evaluate(ignore_int)
         sec = self.time / 1000
         sleep(sec)
 

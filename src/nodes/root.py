@@ -5,7 +5,7 @@ class Root(bases.BlockNode):
     def __init__(self):
         self.body = []
 
-    def evaluate(self):
+    def evaluate(self, ignore_int = False):
         for node in self.body:
-            super().evaluate()
+            super().evaluate(ignore_int)
             node.evaluate()

@@ -13,10 +13,11 @@ class Node():
 
         return ast
 
-    def evaluate(self):
+    def evaluate(self, ignore_int):
         #! Write a less painful script here!
-        while IQ.interrupt:
-            time.sleep(0.00000000001)
+        if not ignore_int:
+            while IQ.interrupt:
+                time.sleep(0.00000000001)
 
     def __repr__(self) -> str:
         return self.prettyprint(0)
