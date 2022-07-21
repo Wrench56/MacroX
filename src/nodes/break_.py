@@ -7,4 +7,5 @@ class BreakNode(bases.InstructionNode):
         pass
 
     def evaluate(self):
+        super().evaluate()
         globals.break_bool = True

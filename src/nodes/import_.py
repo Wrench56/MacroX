@@ -7,4 +7,5 @@ class ImportNode(bases.InstructionNode):
         self.module = module
 
     def evaluate(self):
+        super().evaluate()
         globals.Importer.import_module(f'commands/{self.module}')

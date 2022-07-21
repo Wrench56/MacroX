@@ -11,6 +11,7 @@ class IfNode(bases.Node):
         self.else_body = None
 
     def evaluate(self):
+        super().evaluate()
         if isinstance(self.condition, bases.Node):
             cond = self.condition.evaluate()
             if cond == True:

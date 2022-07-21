@@ -45,6 +45,7 @@ class BinaryOperations(bases.ForkNode):
             logger.error(f'Did not recognize the following value: {num}')
 
     def evaluate(self):
+        super().evaluate()
         is_string = False
         is_num = False
 

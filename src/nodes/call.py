@@ -11,6 +11,7 @@ class CallNode(bases.Node):
         self.check_raw_sequence()
 
     def evaluate(self):
+        super().evaluate()
         args_dict = {}
 
         ga_list = GAH.get_list()

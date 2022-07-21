@@ -7,4 +7,5 @@ class Root(bases.BlockNode):
 
     def evaluate(self):
         for node in self.body:
+            super().evaluate()
             node.evaluate()

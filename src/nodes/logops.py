@@ -53,6 +53,7 @@ class LogicalOperations(bases.ForkNode):
 
 
     def evaluate(self) -> bool:
+        super().evaluate()
         left = self.conv_num(self.identifier_to_value(self.left))
         
         if isinstance(self.right, bases.Node):

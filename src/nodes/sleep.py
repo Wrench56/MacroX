@@ -7,6 +7,7 @@ class SleepNode(bases.InstructionNode):
         self.time = time
 
     def evaluate(self):
+        super().evaluate()
         sec = self.time / 1000
         sleep(sec)
 

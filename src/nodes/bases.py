@@ -1,4 +1,5 @@
-from globals import VH
+from globals import VH, IQ
+import time
 
 class Node():
     KIND = 'Node'
@@ -13,7 +14,10 @@ class Node():
         return ast
 
     def evaluate(self):
-        pass
+        #! Write a less painful script here!
+        while IQ.interrupt:
+            time.sleep(0.00000000001)
+
     def __repr__(self) -> str:
         return self.prettyprint(0)
 
