@@ -38,10 +38,12 @@ class Tokenizer():
         'Less': '^\<(?![=])',
         'GreaterEquals': '^\>\=',
         'LessEquals': '^\<\=',
-        'Jump': '^jump(?![$\w])',
+        'Jump': '^jmp(?![$\w])',
         'LabelName': '^\~[a-zA-Z][$\w]*',
         'Sleep': '^sleep(?![$\w])',
-        'Import': 'import(?![$\w])'
+        'Import': '^import(?![$\w])',
+        'Interrupt': '^(s|q|sq|)int(?![$\w])',
+        'ClearInterrupt': '^cli'
     }
     
               

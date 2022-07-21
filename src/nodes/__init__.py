@@ -13,3 +13,5 @@ from nodes.jump import JumpNode
 from nodes.call import CallNode
 from nodes.sleep import SleepNode
 from nodes.import_ import ImportNode
+from nodes.interrupt import InterruptNode
+from nodes.clear_interrupt import ClearInterruptNode

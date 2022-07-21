@@ -9,5 +9,5 @@ class LabelNode(bases.BlockNode):
         super().evaluate(ignore_int)
         if jump:
             for node in self.body:
-                super().evaluate()
-                node.evaluate()
+                super().evaluate(ignore_int)
+                node.evaluate(ignore_int)

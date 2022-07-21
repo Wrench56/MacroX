@@ -42,8 +42,10 @@ class Command():
         return arg
     
     def run(self):
-        for line in inspect.getsource(self.evaluate).split('\n')[1:]:
-            exec(compile(line.replace('    ', '', 1), filename="", mode="exec"))
+        #for line in inspect.getsource(self.evaluate).split('\n')[1:]:
+        #    print(line)
+        #    exec(compile(line.replace('        ', '', 1), filename="", mode="exec"))
+        self.evaluate()
 
 
     def evaluate(self):

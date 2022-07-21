@@ -12,3 +12,9 @@ class JumpHandler():
             self.jumps[label].evaluate(jump=True)
         else:
             logger.error(f'Jump label {label} does not exist, but you tried to jump to there!')
+    
+    def get(self, label) -> object:
+        if label in self.jumps.keys():
+            return self.jumps[label]
+        else:
+            logger.error(f'Jump label {label} does not exist, but you tried to access it!')

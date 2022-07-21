@@ -1,6 +1,6 @@
 import nodes
 from utils import logger
-from globals import JH
+from globals import JH, IM
 from tokens.base_token import Token
 from utils.dualstack import DualStack
 
@@ -28,7 +28,9 @@ class Parser():
         'Jump': nodes.JumpNode,
         'Call': nodes.CallNode,
         'Sleep': nodes.SleepNode,
-        'Import': nodes.ImportNode
+        'Import': nodes.ImportNode,
+        'Interrupt': nodes.InterruptNode,
+        'ClearInterrupt': nodes.ClearInterruptNode
     }
 
     def __init__(self, tokens) -> None:
@@ -109,12 +111,21 @@ class Parser():
                     elif sftoken == 'CloseCurlyBracket':
                         self.body_flag = False
                         return None
-                    elif sftoken == 'Break':
-                        return nodes.BreakNode()
+                    elif sftoken in ['Break', 'ClearInterrupt']:
+                        return self.SEARCH_FORS[sftoken]()
                     elif sftoken in ['Jump', 'Sleep', 'Import']:
                         return self.SEARCH_FORS[sftoken](remaining_tokens[1].part)
                     elif sftoken == 'Call':
                         return nodes.CallNode(token.part, remaining_tokens[1:])
+                    elif sftoken == 'Interrupt':
+                        if len(remaining_tokens[2:]) > 1 or remaining_tokens[2].token == 'Call':
+                            cond = self.next_node(remaining_tokens[2:])
+                        else:
+                            cond = remaining_tokens[2]
+                        int_node = nodes.InterruptNode(remaining_tokens[1].part, cond, int_type = token.part)
+                        IM.add(int_node)
+
+                        return int_node
                     else:
                         if i+1 > 2:
                             logger.error(f'Unknown operation, the parser missed something at line: {remaining_tokens}')
