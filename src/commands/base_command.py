@@ -1,5 +1,6 @@
 from utils import logger
 from tokens import base_token
+import inspect
 
 class Command():
     arg_parse_list = []
@@ -39,5 +40,11 @@ class Command():
         self.counter += 1
 
         return arg
+    
+    def run(self):
+        for line in inspect.getsource(self.evaluate).split('\n')[1:]:
+            exec(compile(line.replace('    ', '', 1), filename="", mode="exec"))
 
-            
+
+    def evaluate(self):
+        pass

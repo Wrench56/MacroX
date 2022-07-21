@@ -27,7 +27,7 @@ class CallNode(bases.Node):
             self.check_sequence(args_dict)
 
         command_object = command_class(args_dict)
-        ret = command_object.evaluate()
+        ret = command_object.run()
 
         return ret 
 
