@@ -1,5 +1,6 @@
 from nodes import bases
 from time import sleep
+from utils import logger
 
 class SleepNode(bases.InstructionNode):
     KIND = 'SleepNode'
@@ -8,8 +9,11 @@ class SleepNode(bases.InstructionNode):
 
     def evaluate(self, ignore_int = False):
         super().evaluate(ignore_int)
-        sec = self.time / 1000
-        sleep(sec)
+        ms = self.time
+        if not isinstance(ms, int):
+            logger.error('Invalid millisecond value!', command='sleep')
+        
+        sleep(ms / 1000)
 
     def prettyprint(self, indent):
         indent_str = ' '*indent
