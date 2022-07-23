@@ -30,7 +30,8 @@ class Parser():
         'Sleep': nodes.SleepNode,
         'Import': nodes.ImportNode,
         'Interrupt': nodes.InterruptNode,
-        'ClearInterrupt': nodes.ClearInterruptNode
+        'ClearInterrupt': nodes.ClearInterruptNode,
+        'Exit': nodes.ExitNode
     }
 
     def __init__(self, tokens) -> None:
@@ -111,7 +112,7 @@ class Parser():
                     elif sftoken == 'CloseCurlyBracket':
                         self.body_flag = False
                         return None
-                    elif sftoken in ['Break', 'ClearInterrupt']:
+                    elif sftoken in ['Break', 'ClearInterrupt', 'Exit']:
                         return self.SEARCH_FORS[sftoken]()
                     elif sftoken in ['Jump', 'Sleep', 'Import']:
                         return self.SEARCH_FORS[sftoken](remaining_tokens[1].part)

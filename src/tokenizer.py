@@ -43,7 +43,8 @@ class Tokenizer():
         'Sleep': '^sleep(?![$\w])',
         'Import': '^import(?![$\w])',
         'Interrupt': '^(s|q|sq|)int(?![$\w])',
-        'ClearInterrupt': '^cli'
+        'ClearInterrupt': '^cli',
+        'Exit': '^exit'
     }
     
               
@@ -77,7 +78,6 @@ class Tokenizer():
             if line.startswith('//'): # Comment
                 continue
             
-            print(f'New Line: {line}')
             while line != '' and not comment:
                 line = line.strip()
                 for token_type in token_types.keys():
