@@ -1,4 +1,3 @@
-from utils.kwarg_converter import convert
 from utils import prettyprint
 import tokenizer
 import parser
