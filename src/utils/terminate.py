@@ -7,6 +7,8 @@ def terminate():
     os._exit(1)
 
 def terminate_by_hand():
+    globals.IM.pause_all()
+
     logger.info('')
     logger.info('+' + 29*'-' + '+')
     logger.info('|' + 29*' ' + '|')
