@@ -14,7 +14,7 @@ class AssignNode(bases.ForkNode):
         right = self.identifier_to_value(self.right)
 
         if isinstance(self.right, bases.Node):
-            right = self.right.evaluate()
+            right = self.right.evaluate(ignore_int)
         
         if self.target.startswith('$'): # variable
             self.set_variable(self.target, right)

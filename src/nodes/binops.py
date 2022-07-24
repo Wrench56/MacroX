@@ -15,9 +15,9 @@ class BinaryOperations(bases.ForkNode):
         if self.return_type is None:
             self.return_type = type
 
-    def conv_num(self, num) -> int|str|float|None:
+    def conv_num(self, num, ignore_int) -> int|str|float|None:
         if isinstance(num, bases.Node):
-            return self.conv_num(num.evaluate())
+            return self.conv_num(num.evaluate(ignore_int))
         elif isinstance(num, int):
             self.set_ret_type(10)
             return num
@@ -50,8 +50,8 @@ class BinaryOperations(bases.ForkNode):
         is_num = False
 
         # Convert numbers here, since it needs evaluation!
-        right = self.conv_num(self.identifier_to_value(self.right))
-        left = self.conv_num(self.identifier_to_value(self.left))
+        right = self.conv_num(self.identifier_to_value(self.right), ignore_int)
+        left = self.conv_num(self.identifier_to_value(self.left), ignore_int)
 
         if isinstance(right, str):
             is_string = True

@@ -15,19 +15,20 @@ class WhileNode(bases.BlockNode):
     
     def evaluate(self, ignore_int = False):
         super().evaluate(ignore_int)
-        if self.body == None:
+        if self.body == None or self.body == []:
             logger.warning('While\'s body is empty!')
             while True:
+                super().evaluate(ignore_int)
                 time.sleep(self.EMPTY_SLEEP) # Save the processor! :)
 
         while self.body and not globals.break_bool:
-            super().evaluate()
+            super().evaluate(ignore_int)
             if not self.check_condition():
                 break
 
             for node in self.body:
-                super().evaluate()
-                node.evaluate()
+                super().evaluate(ignore_int)
+                node.evaluate(ignore_int)
                 if globals.break_bool:
                     break
         
