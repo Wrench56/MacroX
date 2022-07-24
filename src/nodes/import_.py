@@ -1,5 +1,6 @@
 from nodes import bases
 import globals
+import os
 
 class ImportNode(bases.InstructionNode):
     KIND = 'ImportNode'
@@ -8,4 +9,5 @@ class ImportNode(bases.InstructionNode):
 
     def evaluate(self, ignore_int = False):
         super().evaluate(ignore_int)
-        globals.Importer.import_module(f'commands/{self.module}')
+        abs_path = __file__.replace('/nodes/import_.py', '', 1).replace('\\nodes\\import_.py', '', 1)
+        globals.Importer.import_module(f'{abs_path}/commands/{self.module}/')

@@ -9,7 +9,7 @@ class Importer():
     def import_module(self, path):
         for file_ in self.scan_dir(path):
             file_= file_.replace('//', '/').replace('\\', '/')
-            module = importfile(os.getcwd() + '/' + file_)
+            module = importfile(file_)
             module_name = file_.split('/')[-1].replace('.py', '')
             if not module_name in self.commands.keys():
                 self.commands[module_name] = module
