@@ -17,7 +17,7 @@ class Node():
         #! Write a less painful script here!
         if not ignore_int:
             while IQ.interrupt:
-                time.sleep(0.00000000001)
+                time.sleep(0.0000000000000000000000000000001)
 
     def __repr__(self) -> str:
         return self.prettyprint(0)
