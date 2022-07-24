@@ -9,3 +9,10 @@ class InterruptManager():
         for obj in self.interrupts:
             obj.kill = True
     
+    def pause_all(self):
+        for obj in self.interrupts:
+            obj.pause()
+    
+    def resume_all(self):
+        for obj in self.interrupts:
+            obj.resume()

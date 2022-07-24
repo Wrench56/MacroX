@@ -1,4 +1,4 @@
-from multiprocessing.dummy.connection import families
+import time
 from nodes import bases
 from tokens import base_token
 from utils import logger
@@ -17,6 +17,7 @@ class InterruptNode(bases.InstructionNode):
         self.queued_int = True
         self.thread = None
         self.kill = False
+        self.wait = False
 
         self.parse_interrupt_type()
         
@@ -25,12 +26,11 @@ class InterruptNode(bases.InstructionNode):
         if self.thread is None:
             logger.info('Starting condition checker thread...')
             self.thread = threading.Thread(target=self.check_condition)
+            self.thread.setName('Interrupt Condition thread')
             self.thread.start()
 
     def check_condition(self):
         while not self.kill:
-            #for thread in threading.enumerate(): 
-            #    logger.info(thread.name)
             if isinstance(self.condition, bases.Node):
                 value = self.condition.evaluate()
             elif isinstance(self.condition, base_token.Token):
@@ -48,12 +48,21 @@ class InterruptNode(bases.InstructionNode):
                     globals.interrupt = True
                 
                 if self.queued_int:
-                    globals.IQ.add(self.label)
+                    globals.IQ.add(self.label, self)
                 else:
                     logger.info('Threading...')
                     label_obj = globals.JH.get(self.label)
                     interrupt_label_thread = threading.Thread(target=label_obj.evaluate, kwargs={'jump': True, 'ignore_int': True}).start()
-                    globals.IQ.add_thread(interrupt_label_thread)
+                    interrupt_label_thread.setName('Interrupt process thread')
+                    globals.IQ.add_thread(interrupt_label_thread, self)
+                
+                if not self.sync_int:
+                    self.wait = True
+                else:
+                    self.wait = False
+
+            while self.wait:
+                time.sleep(0.0000000000000000000000000000001)
             
     def parse_interrupt_type(self):
         for char in self.int_type:
@@ -63,3 +72,9 @@ class InterruptNode(bases.InstructionNode):
                 self.queued_int = True
             elif char == 'i':
                 break
+    
+    def resume(self):
+        self.wait = False
+    
+    def pause(self):
+        self.wait = True
