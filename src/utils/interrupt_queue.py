@@ -12,7 +12,6 @@ class InterruptQueue():
         self.interrupt = False
 
     def add(self, label, interrupt_obj):
-        self.interrupt = True
         label_obj = globals.JH.get(label)
         self.stack.append(label_obj)
         if not self.running:
@@ -21,7 +20,6 @@ class InterruptQueue():
             self.run_thread.start()
 
     def add_thread(self, thread, interrupt_obj):
-        self.interrupt = True
         self.threads[thread] = interrupt_obj
         if not self.threads_running:
             self.check_thread = threading.Thread(target=self.check_threads)
@@ -38,8 +36,6 @@ class InterruptQueue():
             label.evaluate(jump=True, ignore_int=True)
             interrupt_obj.resume()
             self.stack.pop(0)
-        
-        self.interrupt = False
         self.running = False
 
     def check_threads(self):
@@ -52,5 +48,4 @@ class InterruptQueue():
                     self.threads[thread].resume()
                     self.threads[thread] = None
         
-        self.interrupt = False
         self.threads_running = False
