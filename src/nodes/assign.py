@@ -24,7 +24,5 @@ class AssignNode(bases.ForkNode):
 
     def set_variable(self, target, value):
         VH.set(target, value) # VH => VariableHandlers
-        print(VH.variables)
     def set_global_argument(self, target, value):
         GAH.set(target, value) # GAH => GlobalArgumentHandler
-        print(GAH.arguments)
