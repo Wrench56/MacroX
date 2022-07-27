@@ -1,4 +1,5 @@
 from utils import logger
+from tokens import base_token
 from commands.base_command import Command
 
 class Input(Command):
@@ -10,4 +11,5 @@ class Input(Command):
         string = self.parse_argument()
         if string is None:
             string = ''
-        return input(string)
+
+        return base_token.Token('String', f'"{input(string)}"')
