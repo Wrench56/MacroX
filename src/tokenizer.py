@@ -42,7 +42,7 @@ class Tokenizer():
         'LabelName': '^\~[a-zA-Z][$\w]*',
         'Sleep': '^sleep(?![$\w])',
         'Import': '^import(?![$\w])',
-        'Interrupt': '^(s|q|sq|)int(?![$\w])',
+        'Interrupt': '^int(?![$\w])',
         'ClearInterrupt': '^cli',
         'Exit': '^exit'
     }

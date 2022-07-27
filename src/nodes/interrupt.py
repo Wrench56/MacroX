@@ -13,8 +13,6 @@ class InterruptNode(bases.InstructionNode):
 
         self.int_type = int_type
 
-        self.sync_int = False
-        self.queued_int = True
         self.thread = None
         self.kill = False
         self.wait = False
@@ -44,22 +42,13 @@ class InterruptNode(bases.InstructionNode):
                 logger.error(f'Condition type was not recognized. The condition was: {self.condition}')
             
             if value is True:
-                if not self.sync_int:
-                    globals.interrupt = True
                 
-                if self.queued_int:
-                    globals.IQ.add(self.label, self)
-                else:
-                    logger.info('Threading...')
-                    label_obj = globals.JH.get(self.label)
-                    interrupt_label_thread = threading.Thread(target=label_obj.evaluate, kwargs={'jump': True, 'ignore_int': True}).start()
-                    interrupt_label_thread.setName('Interrupt process thread')
-                    globals.IQ.add_thread(interrupt_label_thread, self)
+
+                globals.IQ.add(self.label, self)
+
                 
-                if not self.sync_int:
-                    self.wait = True
-                else:
-                    self.wait = False
+               
+                self.wait = True
 
             while self.wait:
                 time.sleep(0.0000000000000000000000000000001)
