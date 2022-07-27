@@ -31,7 +31,8 @@ class Parser():
         'Import': nodes.ImportNode,
         'Interrupt': nodes.InterruptNode,
         'ClearInterrupt': nodes.ClearInterruptNode,
-        'Exit': nodes.ExitNode
+        'Exit': nodes.ExitNode,
+        'Return': nodes.ReturnNode
     }
 
     def __init__(self, tokens) -> None:
@@ -116,10 +117,16 @@ class Parser():
                         return self.SEARCH_FORS[sftoken]()
                     elif sftoken in ['Jump', 'Sleep', 'Import']:
                         return self.SEARCH_FORS[sftoken](remaining_tokens[1].part)
+                    elif sftoken == 'Return':
+                        if len(remaining_tokens[1:]) > 1: # or remaining_tokens[1].token == 'Call':
+                            val = self.next_node(remaining_tokens[1:])
+                        else:
+                            val = remaining_tokens[1]
+                        return nodes.ReturnNode(value=val)
                     elif sftoken == 'Call':
                         return nodes.CallNode(token.part, remaining_tokens[1:])
                     elif sftoken == 'Interrupt':
-                        if len(remaining_tokens[2:]) > 1 or remaining_tokens[2].token == 'Call':
+                        if len(remaining_tokens[2:]) > 1: # or remaining_tokens[2].token == 'Call':
                             cond = self.next_node(remaining_tokens[2:])
                         else:
                             cond = remaining_tokens[2]

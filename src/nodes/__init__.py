@@ -16,3 +16,4 @@ from nodes.import_ import ImportNode
 from nodes.interrupt import InterruptNode
 from nodes.clear_interrupt import ClearInterruptNode
 from nodes.exit_ import ExitNode
+from nodes.return_ import ReturnNode

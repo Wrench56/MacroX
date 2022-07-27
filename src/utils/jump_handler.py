@@ -9,7 +9,7 @@ class JumpHandler():
 
     def jump(self, label):
         if label in self.jumps.keys():
-            self.jumps[label].evaluate(jump=True)
+            return self.jumps[label].evaluate(jump=True)
         else:
             logger.error(f'Jump label {label} does not exist, but you tried to jump to there!')
     

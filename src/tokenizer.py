@@ -6,7 +6,7 @@ class Tokenizer():
     ASSIGN = ':'
     TOKEN_TYPES = {
         'Call': '^\@[a-zA-Z_$][$\w]*',
-        'KeywordArgument': '^[a-zA-Z0-9_][$\w]*[ ]*=',
+        'KeywordArgument': '^[a-zA-Z0-9_][$\w]*[ ]*=$',
         'Semicolon': '^\;',
         'Identifier': '^\$[a-zA-Z][$\w]*',
         'GlobalArgument': '^\%[a-zA-Z_][$\w]*',
@@ -44,7 +44,8 @@ class Tokenizer():
         'Import': '^import(?![$\w])',
         'Interrupt': '^int(?![$\w])',
         'ClearInterrupt': '^cli',
-        'Exit': '^exit'
+        'Exit': '^exit',
+        'Return': '^return(?![$\w])'
     }
     
               
@@ -58,7 +59,7 @@ class Tokenizer():
         return lst
 
 
-    def tokenize(self, script=None, path=None) -> list[base_token.Token]:
+    def tokenize(self, script=None, path=None):
         if path is not None:
             script = self.read(path)
         elif script is not None:
@@ -79,6 +80,7 @@ class Tokenizer():
                 continue
             
             while line != '' and not comment:
+                print(tokens)
                 line = line.strip()
                 for token_type in token_types.keys():
                     res = re.match(token_type, line)
