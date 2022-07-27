@@ -1,6 +1,6 @@
 from nodes import bases
 from utils import logger
-
+from tokens import base_token
 class BinaryOperations(bases.ForkNode):
     KIND = 'BinaryOperationsNode'
     def __init__(self, op, left, right) -> None:
@@ -18,31 +18,31 @@ class BinaryOperations(bases.ForkNode):
     def conv_num(self, num, ignore_int) -> int|str|float|None:
         if isinstance(num, bases.Node):
             return self.conv_num(num.evaluate(ignore_int))
-        elif isinstance(num, int):
-            self.set_ret_type(10)
-            return num
-        elif isinstance(num, float):
-            self.set_ret_type()
-            return num
-        elif num.startswith('0x'):
-            self.set_ret_type(16)
-            return int(num, base=16)
-        elif num.startswith('0b'):
-            self.set_ret_type(2)
-            return int(num.replace('0b', '', 1), base=2)
-        elif isinstance(num, str) and num.startswith('"') and num.endswith('"'):
-            return num[1:-1]
-        elif isinstance(num, str):
-            try:
-                num = int(num)
+        elif isinstance(num, base_token.Token):
+            if num.token == 'Number':
                 self.set_ret_type(10)
-            except:
-                self.set_ret_type(0)
-                if self.op != 'Add' and self.op != 'Times':
-                    logger.error(f'Can\'t use operation {self.op} on string!')
-            return num
-        else:
-            logger.error(f'Did not recognize the following value: {num}')
+                return num.part
+            elif num.token == 'Float':
+                self.set_ret_type()
+                return num.part
+            elif num.token == 'HexNumber':
+                self.set_ret_type(16)
+                return int(num.part, base=16)
+            elif num.token == 'BinaryNumber':
+                self.set_ret_type(2)
+                return int(num.part.replace('0b', '', 1), base=2)
+            
+            elif num.token == 'String':
+                try:
+                    self.set_ret_type(10)
+                    return int(num.part)
+                except:
+                    self.set_ret_type(0)
+                    if self.op != 'Add' and self.op != 'Times':
+                        logger.error(f'Can\'t use operation {self.op} on string!')
+                return num.part
+        
+        logger.error(f'Did not recognize the following value: {num}')
 
     def evaluate(self, ignore_int = False):
         super().evaluate(ignore_int)

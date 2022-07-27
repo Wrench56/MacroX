@@ -28,7 +28,9 @@ class WhileNode(bases.BlockNode):
 
             for node in self.body:
                 super().evaluate(ignore_int)
-                node.evaluate(ignore_int)
+                ret_val = node.evaluate(ignore_int)
+                if ret_val is not None:
+                    return ret_val
                 if globals.break_bool:
                     break
         
@@ -40,7 +42,7 @@ class WhileNode(bases.BlockNode):
                 return True
             
         else:
-            cond = self.identifier_to_value(self.condition)
+            cond = self.identifier_to_value(self.condition).part
             if cond == True:
                 return True
         

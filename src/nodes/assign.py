@@ -16,7 +16,7 @@ class AssignNode(bases.ForkNode):
         if isinstance(self.right, bases.Node):
             right = self.right.evaluate(ignore_int)
         
-        if self.target.startswith('$'): # variable
+        if self.target.token == 'Identifier': # variable
             self.set_variable(self.target, right)
         else:
             self.set_global_argument(self.target, right)

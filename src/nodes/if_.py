@@ -15,21 +15,23 @@ class IfNode(bases.Node):
         if isinstance(self.condition, bases.Node):
             cond = self.condition.evaluate()
             if cond == True:
-                self.evaluate_body(self.if_body)
+                return self.evaluate_body(self.if_body)
             elif cond == False:
-                self.evaluate_body(self.else_body)
+                return self.evaluate_body(self.else_body)
         else:
-            cond = self.identifier_to_value(self.condition)
+            cond = self.identifier_to_value(self.condition).part
             if cond == True:
-                self.evaluate_body(self.if_body)
+                return self.evaluate_body(self.if_body)
             elif cond == False:
-                self.evaluate_body(self.else_body)
+                return self.evaluate_body(self.else_body)
     
 
     def evaluate_body(self, body):
         if isinstance(body, list):
             for node in body:
-                node.evaluate()
+                ret_val = node.evaluate()
+                if ret_val is not None:
+                    return ret_val
         elif isinstance(body, bases.Node):
             body.evaluate()
 

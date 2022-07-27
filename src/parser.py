@@ -141,12 +141,12 @@ class Parser():
                         node = self.SEARCH_FORS[sftoken]
                         
                         op = token.token
-                        left = remaining_tokens[i-1].part
+                        left = remaining_tokens[i-1]
 
                         if len(remaining_tokens[i+1:]) > 1 or remaining_tokens[2].token == 'Call':
                             right = self.next_node(remaining_tokens[i+1:]) # 1.: right, 2.: operation, ... etc.
                         else:
-                            right = remaining_tokens[2].part
+                            right = remaining_tokens[2]
                         return node(op, left, right) # Returns a non-evaluated node object
 
     def preprocess(self, tokens):

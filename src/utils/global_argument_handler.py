@@ -5,7 +5,7 @@ class GlobalArgumentHandler():
 
 
     def set(self, name, value):
-        self.arguments[name[1:]] = self.identifier_to_value(value) # strip the "%" from the name
+        self.arguments[name[1:]] = self.identifier_to_value(value).part # strip the "%" from the name
 
     def get_list(self):
         return self.arguments

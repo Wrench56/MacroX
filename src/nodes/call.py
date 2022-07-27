@@ -1,4 +1,5 @@
 from nodes import bases
+from tokens import base_token
 from utils import logger
 from globals import Importer, GAH
 
@@ -42,12 +43,11 @@ class CallNode(bases.Node):
             if skip_flag:
                 skip_flag = False
                 continue
-            if token.token == 'KeywordArgument':
-                ret_dict[token.part[:-1].strip()] = self.identifier_to_value(args[i+1].part)
+            if token.token == 'KeywordArgument': 
+                ret_dict[token.part[:-1].strip()] = self.identifier_to_value(args[i+1]).part
                 skip_flag = True
             else:
-                val = self.identifier_to_value(token.part)
-                ret_dict[counter] = val
+                ret_dict[counter] = self.identifier_to_value(token).part
                 counter += 1
 
         return ret_dict

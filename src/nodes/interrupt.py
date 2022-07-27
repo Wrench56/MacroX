@@ -15,8 +15,6 @@ class InterruptNode(bases.InstructionNode):
         self.thread = None
         self.kill = False
         self.wait = False
-
-        self.parse_interrupt_type()
         
     def evaluate(self, ignore_int = False):
         super().evaluate(ignore_int)
@@ -29,12 +27,12 @@ class InterruptNode(bases.InstructionNode):
     def check_condition(self):
         while not self.kill:
             if isinstance(self.condition, bases.Node):
-                value = self.condition.evaluate()
+                value = self.condition.evaluate(ignore_int=True)
             elif isinstance(self.condition, base_token.Token):
                 if self.condition.token == 'Identifier':
                     value = globals.VH.get(self.condition.part)
                 elif self.condition.token == 'LabelName':
-                    value = globals.JH.jump(self.condition.part[1:])
+                    value = globals.JH.jump(self.condition.part[1:], True)
                 elif self.condition.token == 'Boolean':
                     value = self.condition
             else:

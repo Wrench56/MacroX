@@ -1,5 +1,6 @@
 from globals import VH, IQ
 import time
+from tokens import base_token
 
 class Node():
     KIND = 'Node'
@@ -7,8 +8,8 @@ class Node():
         pass
 
     def identifier_to_value(self, ast):
-        if isinstance(ast, str):
-            if ast.startswith('$'):
+        if isinstance(ast, base_token.Token):
+            if ast.token == 'Identifier':
                 return VH.get(ast)
 
         return ast

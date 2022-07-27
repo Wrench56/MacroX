@@ -1,5 +1,7 @@
 from nodes import bases
 from utils import logger
+from tokens import base_token
+import globals
 
 class LogicalOperations(bases.ForkNode):
     KIND = 'LogicalOperationsNode'
@@ -10,37 +12,38 @@ class LogicalOperations(bases.ForkNode):
 
         self.KIND = f'{self.op}Node'
 
-    def conv_num(self, num) -> int|float|str|bool|None:
+    def conv_num(self, num, ignore_int) -> int|float|str|bool|None:
         if isinstance(num, bases.Node):
-            return None
-        elif isinstance(num, int):
-            return num
-        elif isinstance(num, float):
-            return num
-        elif num.startswith('0x'):
-            return int(num, base=16)
-        elif num.startswith('0b'):
-            return int(num.replace('0b', '', 1), base=2)
-        elif isinstance(num, str) and num.startswith('"') and num.endswith('"'):
-            return num[1:-1]
-        elif isinstance(num, str):
-            if num == 'true':
-                return True
-            elif num == 'false':
-                return False
-            try:
-                num = int(num)
-            except:
-                pass
-            try:
-                num = float(num)
-            except:
-                pass
-            return num
-        elif isinstance(num, bool):
-            return num
-        else:
-            logger.error(f'Did not recognize the following value: {num}')
+            return num.evaluate(ignore_int)
+        elif isinstance(num, base_token.Token):
+            if num.token == 'LabelName':
+                return self.conv_num(self.identifier_to_value(globals.JH.jump(num.part[1:], ignore_int)), ignore_int) # conv_num might not be needed here
+            elif num.token == 'Number':
+                return num.part
+            elif num.token == 'Float':
+                return num.part
+            elif num.token == 'HexNumber':
+                return int(num.part, base=16)
+            elif num.token == 'BinaryNumber':
+                return int(num.part.replace('0b', '', 1), base=2)
+            elif num.token == 'String':
+                if num.part == 'true':
+                    return True
+                elif num.part == 'false':
+                    return False
+                try:
+                    return int(num.part)
+                except:
+                    pass
+                try:
+                    return float(num.part)
+                except:
+                    pass
+                return num.part
+            elif num.token == 'Boolean':
+                return num.part
+       
+        logger.error(f'Did not recognize the following value: {num}')
 
     def get_type(self, target) -> str:
         if isinstance(target, bool):
@@ -54,14 +57,15 @@ class LogicalOperations(bases.ForkNode):
 
     def evaluate(self, ignore_int = False) -> bool:
         super().evaluate(ignore_int)
-        left = self.conv_num(self.identifier_to_value(self.left))
-        
+        left = self.conv_num(self.identifier_to_value(self.left), ignore_int)
         if isinstance(self.right, bases.Node):
             right = self.right.evaluate()
-        right = self.conv_num(self.identifier_to_value(self.right))
+        else:
+            right = self.conv_num(self.identifier_to_value(self.right), ignore_int)
+        
         type_l = self.get_type(left)
         type_r = self.get_type(right)
-
+        
         if type_l != type_r:
             logger.error(f'Can\'t use logical operation "{self.op}" on {type_l} and {type_r}!')
 
