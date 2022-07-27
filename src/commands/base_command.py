@@ -1,7 +1,3 @@
-from utils import logger
-from tokens import base_token
-import inspect
-
 class Command():
     arg_parse_list = []
     def __init__(self, args) -> None:
@@ -45,7 +41,7 @@ class Command():
         #for line in inspect.getsource(self.evaluate).split('\n')[1:]:
         #    print(line)
         #    exec(compile(line.replace('        ', '', 1), filename="", mode="exec"))
-        self.evaluate()
+        return self.evaluate()
 
 
     def evaluate(self):
