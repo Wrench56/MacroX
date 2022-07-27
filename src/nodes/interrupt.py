@@ -7,11 +7,10 @@ import threading
 
 class InterruptNode(bases.InstructionNode):
     KIND = 'InterruptNode'
-    def __init__(self, label, condition, int_type) -> None:
+    def __init__(self, label, condition) -> None:
         self.label = label[1:] #! Since first char is "~"!
         self.condition = condition
 
-        self.int_type = int_type
 
         self.thread = None
         self.kill = False
@@ -34,8 +33,8 @@ class InterruptNode(bases.InstructionNode):
             elif isinstance(self.condition, base_token.Token):
                 if self.condition.token == 'Identifier':
                     value = globals.VH.get(self.condition.part)
-                #elif self.condition.token == 'Label':
-                #    value = globals.JH.jump(self.condition.part)
+                elif self.condition.token == 'LabelName':
+                    value = globals.JH.jump(self.condition.part[1:])
                 elif self.condition.token == 'Boolean':
                     value = self.condition
             else:
@@ -52,15 +51,6 @@ class InterruptNode(bases.InstructionNode):
 
             while self.wait:
                 time.sleep(0.0000000000000000000000000000001)
-            
-    def parse_interrupt_type(self):
-        for char in self.int_type:
-            if char == 's': # Synchronized-Interrupt
-                self.sync_int = True
-            elif char == 'q': # Queued-Interrupt
-                self.queued_int = True
-            elif char == 'i':
-                break
     
     def resume(self):
         self.wait = False

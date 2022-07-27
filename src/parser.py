@@ -130,7 +130,7 @@ class Parser():
                             cond = self.next_node(remaining_tokens[2:])
                         else:
                             cond = remaining_tokens[2]
-                        int_node = nodes.InterruptNode(remaining_tokens[1].part, cond, int_type = token.part)
+                        int_node = nodes.InterruptNode(remaining_tokens[1].part, cond)
                         IM.add(int_node)
 
                         return int_node
