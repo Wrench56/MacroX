@@ -7,7 +7,7 @@ import time
 
 class Dxsend(Command):
     arg_parse_list = ['string', 'auto_cap']
-    DELAY = 0.005
+    DELAY = 0.0005
     def __init__(self, args) -> None:
         super().__init__(args)
     
