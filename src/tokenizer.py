@@ -45,7 +45,8 @@ class Tokenizer():
         'Interrupt': '^int(?![$\w])',
         'ClearInterrupt': '^cli',
         'Exit': '^exit',
-        'Return': '^return(?![$\w])'
+        'Return': '^return(?![$\w])',
+        'Replay': '^rpl(?![$\w])'
     }
     
               
@@ -80,7 +81,6 @@ class Tokenizer():
                 continue
             
             while line != '' and not comment:
-                print(tokens)
                 line = line.strip()
                 for token_type in token_types.keys():
                     res = re.match(token_type, line)
@@ -92,7 +92,6 @@ class Tokenizer():
                             comment = True
                             break
             tokens.append(base_token.Token('Newline', '\\n'))
-            
         return tokens
 
 
