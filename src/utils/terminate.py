@@ -18,3 +18,7 @@ def terminate_by_hand():
     logger.info('')
 
     terminate()
+
+def terminate_recording():
+    logger.info('Recording was terminated!')
+    os._exit(1)

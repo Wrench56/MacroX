@@ -1,4 +1,4 @@
-from utils import prettyprint
+from utils import prettyprint, options
 import tokenizer
 import parser
 class Interpreter():
@@ -8,10 +8,13 @@ class Interpreter():
     def start(self):
         tokens = self.tokenize(self.path)
         prettyprint.print_tokens(tokens)
-        print()
+
 
         root = self.parse(tokens)
-        print(root)
+
+        if options.options.verbose:
+            print()
+            print(root)
 
         root.evaluate()
 
