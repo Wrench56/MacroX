@@ -30,12 +30,24 @@ def main():
     
 
     options.options = parser.parse_args()
-    if options.options:
-        if options.options.filename is not None:
-            keyboard.add_hotkey('ctrl+q', terminate.terminate_recording)
-            rec = recorder.Recorder()
-            rec.wait_for('f1', options.options.filename + '.mof')
+    if not options.options:
+        print(DESC)
+        return
+
+    if options.options.record is True:
+        if options.options.filename is None:
+            print('No Actionfile specified!')
+            return
+
+        keyboard.add_hotkey('ctrl+q', terminate.terminate_recording)
+        rec = recorder.Recorder()
+        rec.wait_for('f1', options.options.filename + '.mof')
     else:
+        if options.options.filename is None:
+            print('No .mox file specified!')
+            return
+
+
         keyboard.add_hotkey('ctrl+q', terminate.terminate_by_hand)
         keyboard.add_hotkey('ctrl+t', debugger.print_threads)
         keyboard.add_hotkey('ctrl+v', debugger.print_vars)
@@ -47,3 +59,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+
