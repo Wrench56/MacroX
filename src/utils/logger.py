@@ -10,7 +10,7 @@ def pprint(message, tag, tag_color, command=None):
         print(f'[{tag_color}{tag}{colorama.Style.RESET_ALL}]  {message}')
 
 def error(message, command=None):
-    pprint(message=message, command=command, tag="ERRO", tag_color=colorama.Fore.RED)
+    pprint(message=message, command=command, tag="FAIL", tag_color=colorama.Fore.RED)
     exit()
 
 def info(message, command=None):
