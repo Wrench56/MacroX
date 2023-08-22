@@ -7,14 +7,18 @@ class Interpreter():
 
     def start(self):
         tokens = self.tokenize(self.path)
-        prettyprint.print_tokens(tokens)
-
+        
+        # Print tokens when verbose is enabled
+        if options.options.verbose:
+            prettyprint.print_tokens(tokens)
+            print()
 
         root = self.parse(tokens)
-
+        
+        # Print parsed tree when verbose is enabled
         if options.options.verbose:
-            print()
             print(root)
+            print(f'\n{30 * "="} [Starting] {30 * "="}\n')
 
         root.evaluate()
 
